@@ -10,7 +10,7 @@ with DAG(
     catchup=False,
 ) as dag:
 
-    @task
+    @task(on_success_callback=lambda x: print(f"Task {x} succeeded"))
     def task1():
         time.sleep(300)
         return 1
