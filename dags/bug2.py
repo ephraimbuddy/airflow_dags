@@ -6,6 +6,7 @@ with DAG(
     dag_id='dag1',
     start_date=datetime(2024, 1, 1),
     catchup=False,
+    on_success_callback= lambda : print('dag1 success adjdasldfjlsdalfjalsdflsdlfj'),
 ) as dag:
 
     @task_decorator()
