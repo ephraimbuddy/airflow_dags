@@ -2,11 +2,14 @@ from datetime import datetime
 import time
 from airflow import DAG
 from airflow.decorators import task as task_decorator
+
+def mycallback(context):
+    print('mycallback sadhfdasjfjlsdf asdjflsdajflasdjflsdjfl sdfjklkasdjflasjdl')
 with DAG(
     dag_id='dag1',
     start_date=datetime(2024, 1, 1),
     catchup=False,
-    on_success_callback= lambda x : print(x)('dag1 success adjdasldfjlsdalfjalsdflsdlfj'),
+    on_success_callback= mycallback,
 ) as dag:
 
     @task_decorator()
