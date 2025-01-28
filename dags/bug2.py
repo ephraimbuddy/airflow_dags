@@ -3,8 +3,9 @@ import time
 from airflow import DAG
 from airflow.decorators import task as task_decorator
 
-def mycallback(context):
+def mycallback():
     print('mycallback sadhfdasjfjlsdf asdjflsdajflasdjflsdjfl sdfjklkasdjflasjdl')
+    
 with DAG(
     dag_id='dag1',
     start_date=datetime(2024, 1, 1),
