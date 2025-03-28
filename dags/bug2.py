@@ -4,7 +4,7 @@ from airflow import DAG
 from airflow.decorators import task as task_decorator
 
 def mycallback():
-    print('mycallback sadhfdasjfjlsdf asdjflsdajflasdjflsdjfl sdfjklkasdjflasjdl')
+    print('mycallback')
     
 with DAG(
     dag_id='dag1',
