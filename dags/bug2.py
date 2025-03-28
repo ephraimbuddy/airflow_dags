@@ -14,13 +14,8 @@ with DAG(
 ) as dag:
 
     @task_decorator()
-    def task1():
-        time.sleep(5)
-        print('task1')
-
-    @task_decorator()
     def task2():
         time.sleep(5)
         print('task2')
 
-    task1() >> task2()
+    task2()
