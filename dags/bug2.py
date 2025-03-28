@@ -17,10 +17,15 @@ with DAG(
     def task1():
         time.sleep(5)
         print('task1')
+    
+    @task_decorator()
+    def task3():
+        time.sleep(5)
+        print('task234')
 
     @task_decorator()
     def task2():
         time.sleep(5)
-        print('task')
+        print('task23')
 
-    task1() >> task2()
+    task1() >> task2() >> task3()
