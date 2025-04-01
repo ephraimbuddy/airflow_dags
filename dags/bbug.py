@@ -1,19 +1,16 @@
-import time
-
 from airflow import DAG
-from datetime import datetime
-from airflow.decorators import task
+from airflow.providers.standard.operators.bash import BashOperator
 
-with DAG(
-    dag_id='perfdag2',
-    start_date=datetime(2021, 1, 1),
-    catchup=False,
-) as dag:
+with DAG(dag_id="demo"):
+    # First run
+    sleep = BashOperator(task_id="sleep", bash_command="sleep 45")
+    hello = BashOperator(task_id="hello", bash_command="echo 'Hello'")
+    astronomer = BashOperator(task_id="astronomer", bash_command="echo 'Astonomer'")
+    
+    sleep >> hello >> astronomer
 
-    @task(on_success_callback=lambda x: print(f"Task {x} succeeded"))
-    def task1():
-        time.sleep(300)
-        return 1
+    # Second run
+    # sleep = BashOperator(task_id="sleep", bash_command="sleep 45")
+    # hello = BashOperator(task_id="hello", bash_command="echo 'Hello Astronomer!!'")
 
-    for i in range(1000):
-        task1.override(task_id=f'task{i}')()
+    # sleep >> hello
