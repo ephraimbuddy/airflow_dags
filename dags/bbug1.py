@@ -1,7 +1,7 @@
 from airflow import DAG
 from airflow.providers.standard.operators.bash import BashOperator
 
-with DAG(dag_id="demo"):
+with DAG(dag_id="demo2"):
     # First run
     # sleep = BashOperator(task_id="sleep", bash_command="sleep 300")
     # hello = BashOperator(task_id="hello", bash_command="echo 'Hello'")
