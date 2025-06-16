@@ -12,7 +12,7 @@ with DAG(dag_id="demo2",start_date=datetime(2025, 5, 1, 3, 28, 0),
     # sleep >> hello >> astronomer
 
     # Second run
-    sleep = BashOperator(task_id="sleep", bash_command="sleep 42")
+    sleep = BashOperator(task_id="sleep", bash_command="sleep 20")
     hello = BashOperator(task_id="hello", bash_command="echo 'Hello Astronomer!!'")
 
     sleep >> hello
