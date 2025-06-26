@@ -8,11 +8,11 @@ dag = DAG(
     start_date=datetime(2025, 5, 1, 3, 28, 0),
     schedule='@daily',
     is_paused_upon_creation=False,
-    catchup=True
+    catchup=False
 )
 
 hello_task = BashOperator(
-    task_id='test_task1',
+    task_id='test_task',
     bash_command='echo "Hello World from Airflow!"',
     do_xcom_push = True,
     dag=dag,
@@ -25,7 +25,7 @@ bye_task = BashOperator(
 )
 
 hello_again = BashOperator(
-    task_id='test_task_hello',
+    task_id='test_task_hello2',
     bash_command='echo "Hello World from Airflow!"',
     dag=dag,
 )
