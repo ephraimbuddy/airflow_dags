@@ -1,31 +1,33 @@
 from datetime import datetime
-import time
-from airflow import DAG
-from airflow.decorators import task as task_decorator
 
-def mycallback():
-    print('mycallback sadhfdasjfjlsdf sdfjklkasdjflasjdl')
-    
-with DAG(
-    dag_id='dag1',
-    start_date=datetime(2024, 1, 1),
-    catchup=False,
-    on_success_callback= mycallback,
-) as dag:
+from airflow.providers.standard.operators.bash import BashOperator
+from airflow.sdk import DAG
 
-    @task_decorator()
-    def task1():
-        time.sleep(5)
-        print('task1')
-    
-    @task_decorator()
-    def task3():
-        time.sleep(5)
-        print('task234')
+dag = DAG(
+    'test_api_dag',
+    start_date=datetime(2025, 5, 1, 3, 28, 0),
+    schedule='@daily',
+    is_paused_upon_creation=False,
+    catchup=True
+)
 
-    @task_decorator()
-    def task2():
-        time.sleep(5)
-        print('task23')
+hello_task = BashOperator(
+    task_id='test_task',
+    bash_command='echo "Hello World from Airflow!"',
+    do_xcom_push = True,
+    dag=dag,
+)
 
-    task1() >> task2() >> task3()
+bye_task = BashOperator(
+    task_id='test_task_bye',
+    bash_command='echo "Bye World from Airflow!"',
+    dag=dag,
+)
+
+hello_again = BashOperator(
+    task_id='test_task_hello2',
+    bash_command='echo "Hello World from Airflow!"',
+    dag=dag,
+)
+
+hello_task >> bye_task >> hello_again
