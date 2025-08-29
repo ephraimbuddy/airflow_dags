@@ -8,7 +8,7 @@ def _success(context):
 with DAG(dag_id="demo",start_date=datetime(2025, 5, 1, 3, 28, 0),
     schedule='@daily', on_success_callback=_success):
     # First run
-    sleep = BashOperator(task_id="sleep", bash_command="sleep 1")
+    sleep = BashOperator(task_id="sleep", bash_command="sleep 90")
     hello = BashOperator(task_id="hello", bash_command="echo 'Hello'")
     astronomer = BashOperator(task_id="astronomer", bash_command="echo 'Astonomer'")
     
