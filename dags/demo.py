@@ -1,11 +1,11 @@
 from airflow import DAG
-from datetime import datetime
+from datetime import datetime, timedelta
 from airflow.providers.standard.operators.bash import BashOperator
 
 def _success(context):
     print("Task succeeded!")
 
-with DAG(dag_id="demo",start_date=datetime(2025, 5, 1, 3, 28, 0),
+with DAG(dag_id="demo",start_date=datetime.now()-timedelta(days=1),
     schedule='@daily', on_success_callback=_success):
     # First run
     # sleep = BashOperator(task_id="sleep", bash_command="sleep 1")
