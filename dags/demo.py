@@ -11,5 +11,5 @@ with DAG(dag_id="demo",start_date=datetime(2025, 5, 1),
     hello = BashOperator(task_id="hello", bash_command="echo 'Hello'")
     #astronomer = BashOperator(task_id="astronomer", bash_command="echo 'Astonomer'")
     
-    sleep >> hello >> astronomer
+    sleep >> hello 
 
