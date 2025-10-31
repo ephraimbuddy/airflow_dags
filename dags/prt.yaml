@@ -1,0 +1,14 @@
+- name: goproxy
+  image: registry.k8s.io/goproxy:o.1
+  ports:
+    - containerPort: 8080
+  livenessProbe:
+    tcpsocket:
+      port: 8080
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  readinessProbe:
+    tcpsocket:
+      port: 8080
+    initialDelaySeconds: 5
+    periodSeconds: 10
