@@ -10,7 +10,7 @@ def create_dag(dag_id_prefix: str, index: int) -> DAG:
         is_paused_upon_creation=False,
         schedule="@daily",
         start_date=datetime(2025, 8, 1),
-        max_active_runs=2,
+        max_active_runs=4,
         catchup=True,
     ) as dag:
         previous_task = None
