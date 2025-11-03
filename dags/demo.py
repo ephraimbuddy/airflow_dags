@@ -1,6 +1,7 @@
 from airflow import DAG
 from datetime import datetime
 from airflow.providers.standard.operators.bash import BashOperator
+import module.utils as utils
 
 
 with DAG(dag_id="demo",start_date=datetime(2025, 5, 1),
