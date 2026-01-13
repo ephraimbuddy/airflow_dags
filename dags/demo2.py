@@ -1,18 +1,14 @@
-from airflow import DAG
+from airflow import DAG, Variable
 from datetime import datetime
 from airflow.providers.standard.operators.bash import BashOperator
-from module import utils
 
 
-utils.traceback.print_exc()
 
 
 with DAG(dag_id="demo",start_date=datetime(2025, 5, 1),
     schedule='@daily'):
+    total_var = Variable.get("total_var")
+    for i in range(int(total_var)):
+        task = BashOperator(task_id=f"task_{i}", bash_command=f"echo Task {i}")
     
-    sleep = BashOperator(task_id="sleep_1", bash_command="sleep 650")
-    hello = BashOperator(task_id="hello_1", bash_command="echo 'Hello'")
-    astronomer = BashOperator(task_id="astronomer_1", bash_command="echo 'Astonomer'")
-
-    sleep >> hello >> astronomer
 
