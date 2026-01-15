@@ -6,7 +6,7 @@ from airflow.providers.standard.operators.bash import BashOperator
 
 
 
-with DAG(dag_id="demo",start_date=datetime(2025, 5, 1),
+with DAG(dag_id="demo",start_date=datetime.now(datetime.timezone.utc),
     schedule='@daily'):
     total_var = Variable.get("total_var")
     for i in range(int(total_var)):
