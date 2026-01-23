@@ -1,31 +1,36 @@
+import os
+
+import pendulum
+from airflow import DAG
 from airflow.providers.standard.operators.bash import BashOperator
-from airflow.sdk import DAG
-from datetime import datetime
 
 
-def create_dag(dag_id_prefix: str, index: int) -> DAG:
-    dag_id = f"{dag_id_prefix}_{index:03d}"
-    with DAG(
-        dag_id=dag_id,
-        is_paused_upon_creation=False,
-        schedule="@daily",
-        start_date=datetime(2025, 8, 1),
-        max_active_runs=6,
-        catchup=True,
-    ) as dag:
-        previous_task = None
-        #for task_index in range(1,200):
-        task = BashOperator(
-            task_id=f"task_",
-            bash_command="sleep 500",
-        )
-            # if previous_task is not None:
-            #     previous_task >> task
-            # previous_task = task
-    return dag
+def dag_success_alert(context):
+    os.mkdir("/tmp/callback_dag")
+    with open("/tmp/callback_dag/success.txt", "w") as f:
+        f.write("DAG has succeeded")
 
 
-DAG_PREFIX = "bug0"
+with DAG(
+    "callback_dag",
+    schedule=None,
+    start_date=(pendulum.datetime(2024, 12, 1, tz="UTC")),
+    on_success_callback=dag_success_alert,
+):
+    BashOperator(
+        task_id="extract",
+        bash_command="touch 'hello world' && date",
+        cwd=".",
+    )
 
-for i in range(1):
-    globals()[f"{DAG_PREFIX}_{i:03d}"] = create_dag(DAG_PREFIX, i)
+    BashOperator(
+        task_id="transform",
+        bash_command="sleep 1",
+        cwd=".",
+    )
+
+    BashOperator(
+        task_id="load",
+        bash_command="true",
+        cwd=".",
+    )
