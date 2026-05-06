@@ -10,6 +10,15 @@ def dag_success_alert(context):
     with open("/tmp/callback_dag2/success.txt", "w") as f:
         f.write("DAG has succeeded")
 
+def dag_success_alert2(context):
+    os.mkdir("/tmp/callback_dag22")
+    with open("/tmp/callback_dag22/success.txt", "w") as f:
+        f.write("DAG has succeeded")
+
+def dag_success_alert3(context):
+    os.mkdir("/tmp/callback_dag23")
+    with open("/tmp/callback_dag23/success.txt", "w") as f:
+        f.write("DAG has succeeded")
 
 with DAG(
     "callback_dag2",
@@ -27,10 +36,12 @@ with DAG(
         task_id="transform",
         bash_command="sleep 1",
         cwd=".",
+        on_success_callback=dag_success_alert3,
     )
 
     BashOperator(
         task_id="load",
         bash_command="true",
         cwd=".",
+        on_success_callback=dag_success_alert3,
     )
