@@ -20,6 +20,7 @@ with DAG(
     BashOperator(
         task_id="extract",
         bash_command="touch 'hello world' && date",
+        on_success_callback=dag_success_alert,
         cwd=".",
     )
 
