@@ -15,7 +15,6 @@ with DAG(
     "callback_dag2",
     schedule=None,
     start_date=(pendulum.datetime(2024, 12, 1, tz="UTC")),
-    on_success_callback=dag_success_alert,
 ):
     BashOperator(
         task_id="extract",
